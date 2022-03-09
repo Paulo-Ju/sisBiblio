@@ -1,0 +1,207 @@
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Scanner;
+import java.util.*;
+
+class Livro {
+    private int numGenero;
+    private String titulo;
+    private String autor;
+    private String genero;
+
+    public Livro(int numGenero, String titulo, String autor, String genero) {
+        this.numGenero = numGenero;
+        this.titulo = titulo;
+        this.autor = autor;
+        this.genero = genero;
+    }       
+    public int getnumGenero(){
+        return numGenero;
+    }    
+    public String gettitulo(){
+        return titulo;
+    }    
+    public String getautor(){
+        return autor;
+    }    
+    public String getgenero(){
+        return genero;
+    }
+    public String toString(){
+        return numGenero+" "+titulo+" "+autor+" "+genero;
+    }    
+}
+
+class SisBiblio {
+    public static void main(String[] args){
+        
+        Collection<Livro> c = new ArrayList<Livro>();
+        Scanner s;
+        s = new Scanner (System.in);
+        Scanner s1;
+        s1 = new Scanner (System.in);
+        
+        int ch;
+        do{
+            System.out.println("1.Cadastrar novo Livro");
+            System.out.println("2.Ver todos os livros");
+            System.out.println("3.Ver todos os livros de um gênero");
+            System.out.println("4.Buscar por um livro pelo titulo");
+            System.out.println("5.Buscar por um livro pelo autor");
+            System.out.println("6.Deletar livros ja adicionados");
+            System.out.println("7.Editar livros ja adicionados");
+            System.out.println("0. Sair");
+            System.out.println("Qual sua escolha?: ");
+            ch = s.nextInt();
+            
+            switch(ch){
+                case 1:
+                    System.out.println("Generos dos Livros");
+                    System.out.println("1 - Autoajuda");
+                    System.out.println("2 - Biografias e Histórias Reais ");        
+                    System.out.println("3 - Educação e Didáticos ");  
+                    System.out.println("4 - História");          
+                    System.out.println("5 - HQs, Mangás e Graphic Novels ");   
+                    System.out.println("6 - Infantil ");          
+                    System.out.println("7 -  Literatura e Ficção ");          
+                    System.out.println("8 - Religião e Espiritualidade ");          
+                    System.out.println("9 - Romance");          
+                    System.out.println("10 - Suspense ");          
+                    System.out.println("Digite o numero do genero do livro: ");          
+                    
+                    int numGenero = s.nextInt();
+                    System.out.println("Digite o titulo do livro: ");
+                    String titulo = s1.nextLine();
+                    System.out.println("Digite o Autor do Livro: ");
+                    String autor = s1.nextLine();
+                    
+                    c.add(new Livro (numGenero, titulo, autor));
+                    break;
+                case 2:
+                    System.out.println("-----------------------------");
+                    Iterator<Livro> i = c.iterator();
+                    while(i.hasNext()){
+                        Livro e = i.next();
+                        System.out.println(e);
+                    }    
+                    System.out.println("-----------------------------");
+                break;
+                case 3:
+                    boolean found = false;
+                    System.out.println("Digite o numero do Genero para procurar : ");
+                    System.out.println("-----------------------------");
+                    i = c.iterator();
+                    while(i.hasNext()){
+                        Livro e = i.next();
+                        if(e.getnumGenero() == numGenero) {
+                            i.remove();
+                            found = true;
+                            System.out.println(e);
+                        }
+                    }    
+                    if(!found){
+                       System.out.println("Numero do Genero não encontrado.");
+                    }   
+                    System.out.println("-----------------------------");
+                break;    
+                case 4:
+                    found = false;
+                    System.out.println("Digite o nome do titulo do livro para procurar : ");
+                    System.out.println("-----------------------------");
+                    i = c.iterator();
+                    while(i.hasNext()){
+                        Livro e = i.next();
+                        if(e.gettitulo() == titulo) {
+                            i.remove();
+                            found = true;
+                            System.out.println(e);
+                        }                
+                    }
+                    if(!found){
+                       System.out.println("Titulo não encontrado.");
+                    }
+                    System.out.println("-----------------------------");
+                break;
+                case 5:
+                    found = false;
+                    System.out.println("Digite o nome do Autor do livro para procurar : ");
+                    System.out.println("-----------------------------");
+                    i = c.iterator();
+                    while(i.hasNext()){
+                        Livro e = i.next();
+                        if(e.getautor() == autor) {
+                            i.remove();
+                            found = true;
+                            System.out.println(e);
+                        }    
+                    }    
+                    if(!found){
+                        System.out.println("Titulo não encontrado.");
+                    }
+                    System.out.println("-----------------------------");
+                break;
+                case 6:
+                    found = false;
+                    System.out.print("Digite o Titulo do Livro para deletar : ");
+                    titulo = s.nextLine();
+                    System.out.println("----------------------------");
+                    i = c.iterator();
+                    while(i.hasNext()){
+                        Livro e = i.next();
+                        if(e.gettitulo() == titulo)  {
+                            i.remove();
+                            found = true;
+                        }    
+                    }
+                    if(!found){
+                        System.out.println("O titulo não foi encontrado.");
+                    }else{
+                        System.out.println("...!");
+                    }
+                    System.out.println("----------------------------");
+                break;
+                case 7:
+                    found = false;
+                    System.out.print("Digite o titulo do livro para editar : ");
+                    titulo = s.nextLine();
+               
+                    ListIterator<Livro>li = c.listIterator();
+                    while(li.hasNext()){
+                        Livro e = li.next();
+                    if(e.titulo() == titulo)  {
+                     System.out.println("Entre o novo Numero do Genero: ");
+                     numGenero = s1.nextInt();
+                     
+                     System.out.print("Entre o novo titulo : ");
+                     titulo = s1.nextLine();
+
+                     System.out.print("Entre o novo Autor : ");
+                     autor = s1.nextLine();
+                     li.set(new Livro(numGenero,titulo,autor));
+                     found = true;
+                    } 
+                }    
+                 if(!found){
+                  System.out.println("Titulo não encontrado");
+               }else{
+                  System.out.println("O livro foi editado com sucesso...!");
+                }    
+                 
+            break;  
+                }
+            }while(ch !=0 );
+                    
+     }        
+}
+
+class Pessoa {
+    public static void main(String[] args){
+        Scanner input = new Scanner(System.in);
+        String nome, sobrenome;
+        System.out.println("Digite seu nome inteiro");
+        nome = input.next();
+        sobrenome = input.next();
+        input.close();
+        System.out.println(nome + " " +sobrenome);
+    }
+}
